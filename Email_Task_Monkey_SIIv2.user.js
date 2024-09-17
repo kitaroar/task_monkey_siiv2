@@ -8,8 +8,8 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @connect      onrc.eu.org
-// @updateURL    https://raw.githubusercontent.com/YourUsername/my-tampermonkey-scripts/main/my-script.user.js
-// @downloadURL  https://raw.githubusercontent.com/YourUsername/my-tampermonkey-scripts/main/my-script.user.js
+// @updateURL    https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
+// @downloadURL  https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
 // ==/UserScript==
 
 (function() {
