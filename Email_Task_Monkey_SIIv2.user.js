@@ -3,8 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      2.5
 // @description  Adaugă un buton și un formular pe pagina web care trimite date către Google Apps Script
-// @author       Tu
-// @match        *://fotovoltaice.megabloc.ro/*
+// @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
