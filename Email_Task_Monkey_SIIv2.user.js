@@ -5,6 +5,7 @@
 // @description  Adaugă un buton și un formular pe pagina web care trimite date către Google Apps Script
 // @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
+// @match        *://onrc.eu.org/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @connect      onrc.eu.org
