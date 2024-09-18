@@ -22,7 +22,9 @@
     let numarInregistrare = '';
     let dataInregistrare = '';
     let registrator = '';
+    let jud_r = '';
     let operator = '';
+    let jud_o = '';
     let firma = '';
     let formData = ''; // Will store form data (checkboxes and message)
 
@@ -75,8 +77,14 @@
                 columnIndexes.dataInregistrare = index;
             } else if (headerText.includes('Registrator')) {
                 columnIndexes.registrator = index;
+            } else if (headerText.includes('Judet Registrator')) {
+                columnIndexes.jud_r = index;
+            } else if (headerText.includes('Firmă')) {
+                columnIndexes.firma = index;
             } else if (headerText.includes('Operator')) {
                 columnIndexes.operator = index;
+            } else if (headerText.includes('Judet Operator')) {
+                columnIndexes.jud_o = index;
             } else if (headerText.includes('Firmă')) {
                 columnIndexes.firma = index;
             }
@@ -90,7 +98,9 @@
             numarInregistrare = cells[columnIndexes.numarInregistrare]?.innerText.trim() || 'Necunoscut';
             dataInregistrare = cells[columnIndexes.dataInregistrare]?.innerText.trim() || 'Necunoscut';
             registrator = cells[columnIndexes.registrator]?.innerText.trim() || 'Necunoscut';
+            jud_r = cells[columnIndexes.jud_r]?.innerText.trim() || 'Necunoscut';
             operator = cells[columnIndexes.operator]?.innerText.trim() || 'Necunoscut';
+            jud_o = cells[columnIndexes.jud_o]?.innerText.trim() || 'Necunoscut';
             firma = cells[columnIndexes.firma]?.innerText.trim() || 'Necunoscut';
         } else {
             console.log('3rd row not found');
@@ -205,9 +215,9 @@
             <div>
                 <label>Trimite către:</label><br>
                 <input type="radio" id="operatorRadio" name="role" value="${operator}" ${operatorChecked} ${operatorChecked || registratorChecked ? 'disabled' : ''}>
-                <label for="operatorRadio">Operator - ${operator}</label><br>
+                <label for="operatorRadio">Operator - ${operator} (${jud_o})</label><br>
                 <input type="radio" id="registratorRadio" name="role" value="${registrator}" ${registratorChecked} ${operatorChecked || registratorChecked ? 'disabled' : ''}>
-                <label for="registratorRadio">Registrator - ${registrator}</label><br><br>
+                <label for="registratorRadio">Registrator - ${registrator} (${jud_r})</label><br><br>
             </div>
             <input type="submit" value="Trimite">
         `;
