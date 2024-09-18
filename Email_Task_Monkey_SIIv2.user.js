@@ -23,6 +23,7 @@
     let dataInregistrare = '';
     let registrator = '';
     let operator = '';
+    let firma = '';
     let formData = ''; // Will store form data (checkboxes and message)
 
     // Creăm un buton pe pagina web
@@ -76,7 +77,8 @@
                 columnIndexes.registrator = index;
             } else if (headerText.includes('Operator')) {
                 columnIndexes.operator = index;
-            }
+            } else if (headerText.includes('Firmă')) {
+                columnIndexes.firma = index;
         });
 
         // Select the 3rd row (excluding the header and filter rows)
@@ -88,6 +90,7 @@
             dataInregistrare = cells[columnIndexes.dataInregistrare]?.innerText.trim() || 'Necunoscut';
             registrator = cells[columnIndexes.registrator]?.innerText.trim() || 'Necunoscut';
             operator = cells[columnIndexes.operator]?.innerText.trim() || 'Necunoscut';
+            firma = cells[columnIndexes.firma]?.innerText.trim() || 'Necunoscut';
         } else {
             console.log('3rd row not found');
             alert('Nu ești în fereastra care trebuie!\nIntra la Procesare cereri și caută un număr de dosar');
@@ -100,12 +103,7 @@
         //dataInregistrare = '31.12.2024';
         //registrator = 'alexandra.decean';
         //operator = 'madalina.manda';
-
-        //console.log('Username:', usernameExpeditor);
-        //console.log(`Număr înregistrare: ${numarInregistrare}`);
-        //console.log(`Dată înregistrare: ${dataInregistrare}`);
-        //console.log(`Registrator: ${registrator}`);
-        //console.log(`Operator: ${operator}`);
+        //firma = 'TEST SRL';
 
         if(numarInregistrare === 'Necunoscut' || dataInregistrare === 'Necunoscut' ){
             alert('Nu s-a putut prelua numărul sau data înregistrării');
@@ -184,6 +182,7 @@
         // Append the checkboxes and text area to the form
         const formContent = `
             <h5>Probleme la dosar Nr. ${numarInregistrare} / ${dataInregistrare}:</h5>
+            <h5>Pentru firma: ${firma}</h5>
             <hr>
             <div>
                 <input type="checkbox" id="option1" name="options" value="Semnați încheierea">
