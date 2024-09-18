@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Trimitere Task si Email
 // @namespace    http://tampermonkey.net/
-// @version      2.6
+// @version      2.7
 // @description  Adaugă un buton și un formular pe pagina web care trimite date către Google Apps Script
 // @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
