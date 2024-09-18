@@ -77,13 +77,13 @@
                 columnIndexes.dataInregistrare = index;
             } else if (headerText.includes('Registrator')) {
                 columnIndexes.registrator = index;
-            } else if (headerText.includes('Judet Registrator')) {
+            } else if (headerText.includes('Judet registrator')) {
                 columnIndexes.judr = index;
             } else if (headerText.includes('Firmă')) {
                 columnIndexes.firma = index;
             } else if (headerText.includes('Operator')) {
                 columnIndexes.operator = index;
-            } else if (headerText.includes('Judet Operator')) {
+            } else if (headerText.includes('Judet operator')) {
                 columnIndexes.judo = index;
             } else if (headerText.includes('Firmă')) {
                 columnIndexes.firma = index;
