@@ -79,6 +79,7 @@
                 columnIndexes.operator = index;
             } else if (headerText.includes('Firmă')) {
                 columnIndexes.firma = index;
+            }
         });
 
         // Select the 3rd row (excluding the header and filter rows)
