@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Trimitere Task si Email
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.2
 // @description  Adaugă un buton și un formular pe pagina web care trimite date către Google Apps Script
 // @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
@@ -95,35 +95,44 @@
         });
 
         // Select the 3rd row (excluding the header and filter rows)
-        const thirdRow = document.querySelectorAll('tr.ant-table-row')[2];
+        //const thirdRow = document.querySelectorAll('tr.ant-table-row')[2];
 
-        if (thirdRow) {
-            const cells = thirdRow.querySelectorAll('td');
-            numarInregistrare = cells[columnIndexes.numarInregistrare]?.innerText.trim() || 'Necunoscut';
-            dataInregistrare = cells[columnIndexes.dataInregistrare]?.innerText.trim() || 'Necunoscut';
-            judcerere = cells[columnIndexes.judcerere]?.innerText.trim() || 'Necunoscut';
-            registrator = cells[columnIndexes.registrator]?.innerText.trim() || 'Necunoscut';
-            judr = cells[columnIndexes.judr]?.innerText.trim() || 'Necunoscut';
-            operator = cells[columnIndexes.operator]?.innerText.trim() || 'Necunoscut';
-            judo = cells[columnIndexes.judo]?.innerText.trim() || 'Necunoscut';
-            firma = cells[columnIndexes.firma]?.innerText.trim() || 'Necunoscut';
+        const currentUrl = window.location.href;
+        //if (currentUrl.substr(currentUrl.length - 7) != 'process') {
+        if (currentUrl.indexOf('/search-applications/process') !== -1) {
+            const cereriInLista = document.querySelectorAll('tr.ant-table-row').length-2; //numarul de cereri existente in lista
+            if (cereriInLista===0) { // daca nu e nicio cerere
+                console.log('no rows');
+                alert('Nu există nicio cerere în listă.');
+                return; // Prevent form submission
+            }
+            let selectedRow = document.querySelectorAll('tr.ant-table-row')[2]; // implicit iau prima cerere care apare in lista chiar daca nu e selectata
+            if (cereriInLista>1) { // daca exista mai mult de o cerere in lista, o iau pe cea care are clasa selected-row
+                selectedRow = document.querySelectorAll('tr.ant-table-row.selected-row')[0];
+            }
+            if (selectedRow) { // daca exista o cerere selectata
+                    const cells = selectedRow.querySelectorAll('td');
+                    numarInregistrare = cells[columnIndexes.numarInregistrare]?.innerText.trim() || 'Necunoscut';
+                    dataInregistrare = cells[columnIndexes.dataInregistrare]?.innerText.trim() || 'Necunoscut';
+                    judcerere = cells[columnIndexes.judcerere]?.innerText.trim() || 'Necunoscut';
+                    registrator = cells[columnIndexes.registrator]?.innerText.trim() || 'Necunoscut';
+                    judr = cells[columnIndexes.judr]?.innerText.trim() || 'Necunoscut';
+                    operator = cells[columnIndexes.operator]?.innerText.trim() || 'Necunoscut';
+                    judo = cells[columnIndexes.judo]?.innerText.trim() || 'Necunoscut';
+                    firma = cells[columnIndexes.firma]?.innerText.trim() || 'Necunoscut';
+            } else { // daca nu exista selectedRow inseamna ca sunt mai multe in lista si nu s-a ales una
+                console.log('no row selected');
+                alert('Selectează mai întâi o cerere din listă!');
+                return; // Prevent form submission
+            }
         } else {
             console.log('3rd row not found');
-            alert('Nu ești în fereastra care trebuie!\nIntra la Procesare cereri și caută un număr de dosar');
+            alert('Nu ești în fereastra care trebuie!\n\nIntră la Procesare cereri și caută un număr de dosar');
             return; // Prevent form submission
         }
 
-        // Variabila pentru test -> comenteaza in productie
-        //usernameExpeditor = 'adriana.mirea';
-        //numarInregistrare = '9999999';
-        //dataInregistrare = '31.12.2024';
-        //judcerere = 'Arad';
-        //registrator = 'alexandra.decean';
-        //operator = 'madalina.manda';
-        //firma = 'TEST SRL';
-
         if(numarInregistrare === 'Necunoscut' || dataInregistrare === 'Necunoscut' ){
-            alert('Nu s-a putut prelua numărul sau data înregistrării');
+            alert('În această fereastră nu există date suficiente!\nnIntră la Procesare cereri și caută un număr de dosar');
             return; // Prevent form to open
         }
 
@@ -190,11 +199,9 @@
         let operatorChecked = '';
         let registratorChecked = '';
 
-
-
         // Append the checkboxes and text area to the form
         const formContent = `
-            <h3>Probleme la dosar Nr. <strong>${numarInregistrare}</strong> / <strong>${dataInregistrare}</strong></h3>
+            <h3>Cererea Nr. <strong>${numarInregistrare}</strong> / <strong>${dataInregistrare}</strong></h3>
             <h3>Pentru firma: <strong>${firma}</strong> din <strong>${judcerere}</strong></h3>
             <hr>
             <div>
@@ -217,6 +224,10 @@
                 <input type="checkbox" id="option5" name="options" value="Soluționați cererea">
                 <label for="option5">Soluționați cererea</label><br>
             </div>
+            <div>
+                <input type="checkbox" id="option6" name="options" value="Solicitare cazier">
+                <label for="option6">Solicitare cazier</label><br>
+            </div>
             <br/>
             <div>
                 <label for="messageBox">Alte probleme:</label><br>
@@ -226,11 +237,11 @@
         <label>Trimite către:</label><br>
 
         <!-- Operator Checkbox -->
-        <input type="checkbox" id="operatorCheckbox" name="role" value="${operator}" ${operatorChecked} ${usernameExpeditor === operator ? 'disabled' : ''}>
+        <input type="checkbox" id="operatorCheckbox" name="role" value="${operator}" ${operatorChecked} ${( (usernameExpeditor === operator) || (operator === 'Necunoscut') ) ? 'disabled' : ''}>
         <label for="operatorCheckbox">Operator - ${operator} (${judo})</label><br>
 
         <!-- Registrator Checkbox -->
-        <input type="checkbox" id="registratorCheckbox" name="role" value="${registrator}" ${registratorChecked} ${usernameExpeditor === registrator ? 'disabled' : ''}>
+        <input type="checkbox" id="registratorCheckbox" name="role" value="${registrator}" ${registratorChecked} ${( (usernameExpeditor === registrator) || (registrator === 'Necunoscut') ) ? 'disabled' : ''}>
         <label for="registratorCheckbox">Registrator - ${registrator} (${judr})</label><br>
 
         <!-- ORCT Checkbox with Dropdown -->
@@ -357,6 +368,7 @@
             //usernameDestinatar = role
 
             // Get elements
+            mailJudet = '';
             const operatorCheckbox = document.getElementById('operatorCheckbox');
             const registratorCheckbox = document.getElementById('registratorCheckbox');
             const orctCheckbox = document.getElementById('orctCheckbox');
@@ -364,17 +376,19 @@
 
             if (orctCheckbox.checked) {mailJudet = countySelect.value;} // Get the selected value from dropdown}
 
-            if (operatorCheckbox.checked) {
-                usernameDestinatar = operatorCheckbox.value;
-            } else if (registratorCheckbox.checked) {
-                usernameDestinatar = registratorCheckbox.value;
+            if (operatorCheckbox.checked && registratorCheckbox.checked) {
+                usernameDestinatar = JSON.stringify({operator: operator, registrator: registrator});
+            } else if (registratorCheckbox.checked && !operatorCheckbox.checked) {
+                usernameDestinatar = registrator;
+            } else if (!registratorCheckbox.checked && operatorCheckbox.checked) {
+                usernameDestinatar = operator;
             } else if (orctCheckbox.checked) {
                 usernameDestinatar = mailJudet;
             }
 
             // Log the form data
-            console.log("Mesaj de trimis:", formData);
-            console.log("Destinatar: ", usernameDestinatar);
+            //console.log("Mesaj de trimis:", formData);
+            //console.log("Destinatar: ", usernameDestinatar);
 
             // Call function to collect page data and submit everything
             collectDataAndSubmit();
@@ -386,6 +400,17 @@
 
     // Function to collect data from the page and submit everything
     function collectDataAndSubmit() {
+
+        // Variabila pentru test -> comenteaza in productie
+        //usernameExpeditor = 'adriana.mirea';
+        //numarInregistrare = '9999999';
+        //dataInregistrare = '31.12.2024';
+        //judcerere = 'Arad';
+        //registrator = 'alexandra.decean';
+        //operator = 'madalina.manda';
+        //usernameDestinatar = JSON.stringify({registrator: registrator, operator: operator});
+        //usernameDestinatar = 'alexandra.decean';
+        //firma = 'TEST SRL';
 
         const dateDeTrimis = JSON.stringify({
             numarInregistrare: numarInregistrare,
@@ -401,6 +426,7 @@
         GM_xmlhttpRequest({
             method: "POST",
             url: "https://onrc.eu.org/api/administrator/adauga-task",
+            //url: "http://local.onrc.eu.org:3500/api/administrator/adauga-task",
             headers: { "Content-Type": "application/json" },
             data: dateDeTrimis,
             onload: function(response) {
@@ -408,16 +434,15 @@
                     // Parse the JSON response text
                     var data = JSON.parse(response.responseText);
                     console.log("Email Utilizator:", data.emailUtilizator);
-                    console.log("Răspuns de la Google Apps Script:", response.responseText);
-                    alert(data.message);
-
-                    //console.log("Răspuns de la Google Apps Script:", response.responseText);
-                    //alert("Task-ul a fost adăugat cu succes!");
-                    // Variabilele predefinite
+                    console.log("Răspuns de API:", response.responseText);
+                    //alert(data.message);
 
                     let emailDestinatar = data.emailUtilizator || 'Introdu adresa de email';
-                    let subiect = 'Vă rog remediați cererea: ' + numarInregistrare + ' din ' + dataInregistrare; // Subiectul emailului
-                    let corpEmail = 'Vă rog remediați cererea: ' + numarInregistrare + ' din ' + dataInregistrare + '\nCe are următoarea problemă: ' + formData;
+                    let subiect = 'Referitor la cererea: ' + numarInregistrare + ' din ' + dataInregistrare; // Subiectul emailului
+                    let corpEmail = 'Vă rugăm să remediați cererea: ' + numarInregistrare + ' din ' + dataInregistrare + '\n\nProbleme semnalate: ' + formData;
+                    if (data.emailDestinatar2 && data.emailDestinatar2.includes('@')) {
+                        emailDestinatar += ',' + data.emailDestinatar2; // Add Destinatar2 to the recipients list if valid
+                    }
                     if (mailJudet && mailJudet.includes('@') && mailJudet != emailDestinatar) {
                         emailDestinatar += ',' + mailJudet; // Add mailJudet to the recipients list if valid
                     }
@@ -429,8 +454,8 @@
                     window.location.href = mailtoLink;
 
                 } catch (e) {
-                    console.error("Eroare la parsarea răspunsului JSON:", e);
-                    alert("A apărut o eroare la parsarea răspunsului.");
+                    console.error("Eroare la primirea răspunsului JSON:", e);
+                    alert("A apărut o eroare primirea răspunsului.");
                 }
             },
             onerror: function(response) {
