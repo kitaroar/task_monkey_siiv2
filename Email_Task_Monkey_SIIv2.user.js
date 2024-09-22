@@ -11,6 +11,7 @@
 // @connect      onrc.eu.org
 // @updateURL    https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
 // @downloadURL  https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js
 // ==/UserScript==
 
 (function() {
@@ -430,10 +431,10 @@
     //----Notificari--------------------------------------------------------
 
     // Include Font Awesome for the bell icon
-    const fontAwesomeLink = document.createElement('link');
-    fontAwesomeLink.rel = 'stylesheet';
-    fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
-    document.head.appendChild(fontAwesomeLink);
+    //const fontAwesomeLink = document.createElement('link');
+    //fontAwesomeLink.rel = 'stylesheet';
+    //fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+    //document.head.appendChild(fontAwesomeLink);
 
     // Creăm un buton pe pagina web pentru notificări
     const notificationButton = document.createElement('button');
