@@ -505,7 +505,7 @@
                             openModalTasks(data.taskuri);
                         } else {
                             //showMessageModal(data.message, 'fas fa-triangle-exclamation', 'orange');
-                            showToast(data.message, 'error', 7000);
+                            showToast(data.message, 'error', 3500);
                         }
 
                     } catch (e) {
