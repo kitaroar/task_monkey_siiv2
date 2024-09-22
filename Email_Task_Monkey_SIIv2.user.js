@@ -38,7 +38,10 @@
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+        if (parts.length === 2) {
+            return parts.pop().split(';').shift().toLowerCase();
+        }
+        return null;
     }
 
     // Funcție pentru a seta un cookie
@@ -49,7 +52,7 @@
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        document.cookie = name.toLowerCase() + "=" + (value || "") + expires + "; path=/";
     }
 
     //------Toast Message---------------------------------------------------------
@@ -441,7 +444,7 @@
     // Stilizare buton
     notificationButton.style.position = 'fixed'; // Facem butonul vizibil permanent
     notificationButton.style.top = '0px'; // Plasăm butonul în colțul din dreapta sus
-    notificationButton.style.right = '230px';
+    notificationButton.style.right = '250px';
     notificationButton.style.width = '48px'; // Setăm lățimea egală cu înălțimea
     notificationButton.style.height = '48px';
     notificationButton.style.padding = '10px';
