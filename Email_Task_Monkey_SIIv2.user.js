@@ -80,13 +80,13 @@
     }
 
     .toast.success {
-      background-color: PaleGreen;
-      border: 2px solid DarkGreen;
+      background-color: HoneyDew;
+      border: 1px solid PaleGreen;
     }
 
     .toast.error {
-      background-color: PeachPuff;
-      border: 2px solid DarkRed;
+      background-color: SeaShell;
+      border: 1px solid MistyRose;
     }
 
     .toast.show {
