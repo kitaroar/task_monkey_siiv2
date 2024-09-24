@@ -445,7 +445,7 @@
     // Stilizare buton
     notificationButton.style.position = 'fixed'; // Facem butonul vizibil permanent
     notificationButton.style.top = '0px'; // Plasăm butonul în colțul din dreapta sus
-    notificationButton.style.right = '250px';
+    notificationButton.style.right = '15%';
     notificationButton.style.width = '48px'; // Setăm lățimea egală cu înălțimea
     notificationButton.style.height = '48px';
     notificationButton.style.padding = '10px';
