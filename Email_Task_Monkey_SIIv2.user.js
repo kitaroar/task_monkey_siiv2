@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Trimitere Task si Email
 // @namespace    http://tampermonkey.net/
-// @version      4.0
+// @version      4.1
 // @description  Adaugare Taskuri si Notificari intre utilizatori
 // @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
@@ -333,7 +333,7 @@
         // Trimitem cererea POST pentru a marca taskurile ca finalizate
         GM_xmlhttpRequest({
             method: "POST",
-            url: "http://onrc.eu.org/api/client/finalizeaza-taskuri",
+            url: "https://onrc.eu.org/api/client/finalizeaza-taskuri",
             //url: "http://local.onrc.eu.org:3500/api/client/finalizeaza-taskuri",
             headers: { "Content-Type": "application/json" },
             data: JSON.stringify({ids: taskIds}),
@@ -398,7 +398,7 @@
         if (fetchUser != "Necunoscut") {
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "http://onrc.eu.org/api/client/citeste-taskuri",
+                url: "https://onrc.eu.org/api/client/citeste-taskuri",
                 //url: "http://local.onrc.eu.org:3500/api/client/citeste-taskuri",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({ username: fetchUser }),
