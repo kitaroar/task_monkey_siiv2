@@ -1,17 +1,17 @@
 // ==UserScript==
 // @name         Trimitere Task si Email
 // @namespace    http://tampermonkey.net/
-// @version      4.2
+// @version      4.3
 // @description  Adaugare Taskuri si Notificari intre utilizatori
 // @author       ORCT_AR
 // @match        *://rc-prod.onrc.sii/*
-// @match        *://onrc.eu.org/*
+// @match        *://taskflow.onrc.sii/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
-// @connect      onrc.eu.org
-// @updateURL    https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
-// @downloadURL  https://github.com/kitaroar/task_monkey_siiv2/raw/refs/heads/main/Email_Task_Monkey_SIIv2.user.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js
+// @connect      taskflow.onrc.sii
+// @updateURL    https://rep.onrc.sii/monkeyscript/taskuri_notificari.user.js
+// @downloadURL  https://rep.onrc.sii/monkeyscript/taskuri_notificari.user.js
+// @require      https://rep.onrc.sii/monkeyscript/all.min.js
 // ==/UserScript==
 
 (function() {
@@ -75,7 +75,7 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 9999;
+      z-index: 1000;
     }
 
     .toast {
@@ -155,7 +155,7 @@
         messageModal.style.display = 'flex';
         messageModal.style.justifyContent = 'center';
         messageModal.style.alignItems = 'center';
-        messageModal.style.zIndex = 10001;
+        messageModal.style.zIndex = 1000;
 
         // Create modal content
         const modalContent = document.createElement('div');
@@ -233,7 +233,7 @@
     modal.style.height = '100%';
     modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
     modal.style.display = 'none'; // Ascundem modalul inițial
-    modal.style.zIndex = 9999;
+    modal.style.zIndex = 1000;
     modal.style.overflow = 'auto'; // Make modal scrollable
 
     // Conținutul modalului
@@ -363,7 +363,8 @@
         // Trimitem cererea POST pentru a marca taskurile ca finalizate
         GM_xmlhttpRequest({
             method: "POST",
-            url: "https://onrc.eu.org/api/client/finalizeaza-taskuri",
+            url: "https://taskflow.onrc.sii/api/client/finalizeaza-taskuri",
+            //url: "https://onrc.eu.org/api/client/finalizeaza-taskuri",
             //url: "http://local.onrc.eu.org:3500/api/client/finalizeaza-taskuri",
             headers: { "Content-Type": "application/json" },
             data: JSON.stringify({ids: taskIds}),
@@ -429,7 +430,8 @@
         if (fetchUser != "Necunoscut") {
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "https://onrc.eu.org/api/client/citeste-taskuri",
+                url: "https://taskflow.onrc.sii/api/client/citeste-taskuri",
+                //url: "https://onrc.eu.org/api/client/citeste-taskuri",
                 //url: "http://local.onrc.eu.org:3500/api/client/citeste-taskuri",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({ username: fetchUser }),
@@ -484,7 +486,7 @@
     notificationButton.style.color = '#FFF';
     notificationButton.style.backgroundColor = 'transparent';
     notificationButton.style.border = '0px solid white';
-    notificationButton.style.zIndex = 3000;
+    notificationButton.style.zIndex = 999;
     notificationButton.style.cursor = 'pointer';
 
     // Optional: Adăugăm un punct roșu pentru notificări
@@ -519,7 +521,8 @@
         if (fetchUser != "Necunoscut") {
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "https://onrc.eu.org/api/client/citeste-taskuri",
+                url: "https://taskflow.onrc.sii/api/client/citeste-taskuri",
+                //url: "https://onrc.eu.org/api/client/citeste-taskuri",
                 //url: "http://local.onrc.eu.org:3500/api/client/citeste-taskuri",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({username: fetchUser}),
@@ -583,7 +586,7 @@
     modalPlane.style.height = '100%';
     modalPlane.style.backgroundColor = 'rgba(0,0,0,0.5)';
     modalPlane.style.display = 'none'; // Ascundem modalul inițial
-    modalPlane.style.zIndex = 9999;
+    modalPlane.style.zIndex = 1000;
     modalPlane.style.overflow = 'auto'; // Make modal scrollable
 
     // Conținutul modalului
@@ -715,7 +718,8 @@
         // Trimitem cererea POST pentru a marca taskurile ca finalizate
         GM_xmlhttpRequest({
             method: "POST",
-            url: "https://onrc.eu.org/api/client/finalizeaza-taskuri",
+            url: "https://taskflow.onrc.sii/api/client/finalizeaza-taskuri",
+            //url: "https://onrc.eu.org/api/client/finalizeaza-taskuri",
             //url: "http://local.onrc.eu.org:3500/api/client/finalizeaza-taskuri",
             headers: { "Content-Type": "application/json" },
             data: JSON.stringify({ids: taskIds, inchide: true}),
@@ -798,7 +802,7 @@
     planeButton.style.color = '#FFF';
     planeButton.style.backgroundColor = 'transparent';
     planeButton.style.border = '0px solid white';
-    planeButton.style.zIndex = 3000;
+    planeButton.style.zIndex = 999;
     planeButton.style.cursor = 'pointer';
 
     // Punct roșu pentru notificările avion de hârtie
@@ -833,7 +837,8 @@
         if (fetchUser != "Necunoscut") {
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "https://onrc.eu.org/api/client/citeste-taskuri",
+                url: "https://taskflow.onrc.sii/api/client/citeste-taskuri",
+                //url: "https://onrc.eu.org/api/client/citeste-taskuri",
                 //url: "http://local.onrc.eu.org:3500/api/client/citeste-taskuri",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({username: fetchUser}),
@@ -891,7 +896,7 @@
     setariButton.style.color = 'CornflowerBlue';
     setariButton.style.backgroundColor = 'transparent';
     setariButton.style.border = '0px solid orange';
-    setariButton.style.zIndex = 2000;
+    setariButton.style.zIndex = 999;
     setariButton.style.cursor = 'pointer';
     setariButton.style.display = 'none'; // Comenteaza pentru a activa schimbarea userului pentru afisare notificari
 
@@ -907,7 +912,7 @@
     modalSetari.style.height = '100%';
     modalSetari.style.backgroundColor = 'rgba(0,0,0,0.5)';
     modalSetari.style.display = 'none';
-    modalSetari.style.zIndex = 10001;
+    modalSetari.style.zIndex = 1000;
 
     // Conținutul modalului
     const modalContentSetari = document.createElement('div');
@@ -1160,7 +1165,7 @@
         modalBackdrop.style.width = '100%';
         modalBackdrop.style.height = '100%';
         modalBackdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        modalBackdrop.style.zIndex = '9999';
+        modalBackdrop.style.zIndex = '1000';
 
         // Create the form container
         const formContainer = document.createElement('div');
@@ -1172,7 +1177,7 @@
         formContainer.style.border = '1px solid #ccc';
         formContainer.style.padding = '30px';
         formContainer.style.borderRadius = '10px';
-        formContainer.style.zIndex = 10000;
+        formContainer.style.zIndex = 1000;
         formContainer.style.width = '600px';
         formContainer.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.1)';
 
@@ -1252,6 +1257,10 @@
             <div>
                 <input type="checkbox" id="option6" name="options" value="Solicitare cazier">
                 <label for="option6">Solicitare cazier</label><br>
+            </div>
+            <div>
+                <input type="checkbox" id="option7" name="options" value="Solicitare CUI">
+                <label for="option6">Solicitare CUI</label><br>
             </div>
             <br/>
             <div>
@@ -1452,7 +1461,8 @@
             //console.log("Date transmise: ", dateDeTrimis);
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "https://onrc.eu.org/api/administrator/adauga-task",
+                url: "https://taskflow.onrc.sii/api/administrator/adauga-task",
+                //url: "https://onrc.eu.org/api/administrator/adauga-task",
                 //url: "http://local.onrc.eu.org:3500/api/administrator/adauga-task",
                 headers: { "Content-Type": "application/json" },
                 data: dateDeTrimis,
